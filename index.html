@@ -214,8 +214,17 @@
       border-radius: 99px;
       transition: width 0.2s linear;
     }
+    .modal-card {
+      background: var(--usagi-yellow);
+      border: 3.5px solid var(--ink);
+      border-radius: 20px;
+      padding: 14px;
+      margin: 12px 0;
+      box-shadow: 0 5px 0 var(--ink);
+      display: none;
+    }
     .timeline-box {
-      height: 200px;
+      height: 220px;
       overflow-y: auto;
       background: #fffdf9;
       border: 3px solid var(--ink);
@@ -226,7 +235,7 @@
       gap: 7px;
     }
     .log-item {
-      padding: 7px 10px;
+      padding: 8px 11px;
       border: 2px solid var(--ink);
       border-left: 6px solid var(--hachi-sky);
       background: #ffffff;
@@ -236,6 +245,14 @@
     .log-item.milestone {
       border-left-color: var(--usagi-gold);
       background: #fffdf0;
+    }
+    .log-item.good {
+      border-left-color: #52b788;
+      background: #f3fbf6;
+    }
+    .log-item.danger {
+      border-left-color: var(--chiikawa-rose);
+      background: #fff2f5;
     }
     .stage-showcase {
       background: linear-gradient(180deg, var(--hachi-blue) 0%, #fffdf9 62%, var(--meadow-mint) 100%);
@@ -391,7 +408,7 @@
           <span class="badge-pill" id="birth-tag">Born in ...</span>
           <span class="badge-pill" style="background:var(--usagi-yellow);" id="job-tag">Job: Baby</span>
           <span class="badge-pill" style="background:var(--meadow-mint);">
-            <span id="ui-wealth-lbl">Savings</span>: $<span id="wealth-val">0</span> (+$<span id="income-val">0</span>/yr)
+            <span id="ui-wealth-lbl">Savings</span>: \$<span id="wealth-val">0</span> (+\$<span id="income-val">0</span>/yr)
           </span>
         </div>
 
@@ -426,6 +443,13 @@
           </div>
         </div>
 
+        <!-- Interactive Crossroads Dilemma Modal -->
+        <div class="modal-card" id="event-modal">
+          <div class="title-font" style="font-size: 0.96rem; margin-bottom: 4px;" id="event-title">Life Crossroads!</div>
+          <p id="event-desc" style="margin: 0 0 10px; font-size: 0.88rem;"></p>
+          <div class="btn-row" id="event-choices" style="justify-content: flex-start;"></div>
+        </div>
+
         <!-- Focus Buttons -->
         <div style="text-align: center;">
           <div id="ui-focus-hdr" style="font-size: 0.72rem; color: var(--muted); text-transform: uppercase;">Yearly Focus</div>
@@ -446,7 +470,7 @@
           <button type="button" onclick="setLifeMinutes(5)" id="dur-live-5" class="btn-active">5m</button>
           <button type="button" onclick="setLifeMinutes(15)" id="dur-live-15">15m</button>
           <button type="button" onclick="setLifeMinutes(30)" id="dur-live-30">30m</button>
-          <button type="button" class="btn-gold" onclick="miracleBoost()" id="miracle-btn">Star Wish (+$10k)</button>
+          <button type="button" class="btn-gold" onclick="miracleBoost()" id="miracle-btn">Star Wish (+\$10k)</button>
         </div>
 
         <div class="timeline-box" id="timeline"></div>
@@ -510,7 +534,7 @@
         bornBtn: "Be Born Now! (1 in 8,000,000,000)", wealth: "Savings",
         health: "Health", happy: "Happiness", smart: "Study", social: "Friends",
         focusHdr: "Choose Yearly Focus", fBal: "Balanced", fStu: "Study", fHus: "Work Quest", fHea: "Rest", fSoc: "Friends",
-        pause: "Pause", resume: "Resume", wish: "Star Wish (+$10k)", savePng: "Save Character Card (PNG)",
+        pause: "Pause", resume: "Resume", wish: "Star Wish (+\$10k)", savePng: "Save Character Card (PNG)",
         peersTitle: "4 Friends Born in the Same Second", villageTitle: "Village of Past Lives",
         stages: Array.of("1yo Baby", "Kindergarten Kid", "Exam Student", "Career Adult", "Cozy Elder"),
         jobs: { baby: "Little Infant", kid: "Primary Pupil", student: "License Student", hunter: "Sasumata Hunter", scholar: "AI Scholar", chef: "Ramen & Mochi Chef", idol: "Pastel Star Idol", tycoon: "Guild Tycoon" }
@@ -522,7 +546,7 @@
         bornBtn: "立即投胎诞生！(80亿分之一)", wealth: "存款",
         health: "健康", happy: "开心", smart: "学识", social: "社交",
         focusHdr: "每年生活重心", fBal: "均衡", fStu: "读书", fHus: "讨伐打工", fHea: "休息", fSoc: "交友",
-        pause: "暂停", resume: "继续", wish: "星之愿望 (+$10k)", savePng: "保存角色纪念卡 (PNG图片)",
+        pause: "暂停", resume: "继续", wish: "星之愿望 (+\$10k)", savePng: "保存角色纪念卡 (PNG图片)",
         peersTitle: "同一秒诞生的4位小伙伴", villageTitle: "往生记忆小村",
         stages: Array.of("1岁宝宝", "幼儿园萌娃", "备考学生", "职场大人", "温暖长者"),
         jobs: { baby: "软萌小宝宝", kid: "背小包学童", student: "除草证考生", hunter: "讨伐除草猎人", scholar: "AI科学学者", chef: "拉面麻薯大厨", idol: "星光偶像", tycoon: "黄金商会大亨" }
@@ -534,7 +558,7 @@
         bornBtn: "今すぐ誕生する！(80億分の1)", wealth: "貯金",
         health: "けんこう", happy: "ハッピー", smart: "べんきょう", social: "ともだち",
         focusHdr: "今年のすごし方", fBal: "バランス", fStu: "べんきょう", fHus: "草むしり・討伐", fHea: "休憩", fSoc: "あそぶ",
-        pause: "一時停止", resume: "再開", wish: "星のねがい (+$10k)", savePng: "キャラカードを画像保存 (PNG)",
+        pause: "一時停止", resume: "再開", wish: "星のねがい (+\$10k)", savePng: "キャラカードを画像保存 (PNG)",
         peersTitle: "同じ秒に生まれた4人の仲間", villageTitle: "思い出の村",
         stages: Array.of("1才ベビー", "キッズ", "受験生", "おしごと大人", "ぽかぽかシニア"),
         jobs: { baby: "もちもち赤ちゃん", kid: "ポシェット園児", student: "草むしり検定生", hunter: "さすまたハンター", scholar: "AIはかせ", chef: "ラーメン職人", idol: "キラキラアイドル", tycoon: "ゴールド大富豪" }
@@ -546,7 +570,7 @@
         bornBtn: "Chào Đời Ngay! (1 trên 8 Tỷ)", wealth: "Tiết kiệm",
         health: "Sức khỏe", happy: "Hạnh phúc", smart: "Học vấn", social: "Bạn bè",
         focusHdr: "Trọng Tâm Năm", fBal: "Cân bằng", fStu: "Học tập", fHus: "Làm việc", fHea: "Nghỉ ngơi", fSoc: "Bạn bè",
-        pause: "Tạm dừng", resume: "Tiếp tục", wish: "Ước Sao (+$10k)", savePng: "Tải Ảnh Nhân Vật (PNG)",
+        pause: "Tạm dừng", resume: "Tiếp tục", wish: "Ước Sao (+\$10k)", savePng: "Tải Ảnh Nhân Vật (PNG)",
         peersTitle: "4 Bạn Nhỏ Sinh Cùng Giây", villageTitle: "Ngôi Làng Ký Ức",
         stages: Array.of("Bé 1 Tuổi", "Thiếu Nhi", "Học Sinh", "Người Lớn", "Cao Niên"),
         jobs: { baby: "Em Bé Mochi", kid: "Bé Mẫu Giáo", student: "Học Sinh Ôn Thi", hunter: "Thợ Săn Sasumata", scholar: "Nhà Nghiên Cứu AI", chef: "Đầu Bếp Ramen", idol: "Thần Tượng", tycoon: "Doanh Nhân Vàng" }
@@ -558,7 +582,7 @@
         bornBtn: "Lahir Sekarang! (1 dari 8 Miliar)", wealth: "Tabungan",
         health: "Kesehatan", happy: "Bahagia", smart: "Belajar", social: "Teman",
         focusHdr: "Fokus Tahunan", fBal: "Seimbang", fStu: "Belajar", fHus: "Bekerja", fHea: "Istirahat", fSoc: "Teman",
-        pause: "Jeda", resume: "Lanjut", wish: "Harapan Bintang (+$10k)", savePng: "Simpan Kartu Karakter (PNG)",
+        pause: "Jeda", resume: "Lanjut", wish: "Harapan Bintang (+\$10k)", savePng: "Simpan Kartu Karakter (PNG)",
         peersTitle: "4 Teman Lahir di Detik yang Sama", villageTitle: "Desa Kehidupan Lalu",
         stages: Array.of("Bayi 1 Thn", "Anak Kecil", "Pelajar", "Dewasa", "Lansia"),
         jobs: { baby: "Bayi Mochi", kid: "Murid Cilik", student: "Pelajar Ujian", hunter: "Pemburu Sasumata", scholar: "Ilmuwan AI", chef: "Koki Ramen", idol: "Idola Bintang", tycoon: "Sultan Guild" }
@@ -566,418 +590,31 @@
     };
 
     const COUNTRIES = Array.of(
-      { id: "jp", name: "Japan", weight: 5, baseIncome: 22000, healthMod: 2, setting: "Sakura Ward" },
-      { id: "sg", name: "Singapore", weight: 4, baseIncome: 28000, healthMod: 2, setting: "Marina Bay" },
-      { id: "vn", name: "Vietnam", weight: 7, baseIncome: 5200, healthMod: 0, setting: "Lantern Delta" },
-      { id: "cn", name: "China", weight: 12, baseIncome: 8500, healthMod: 1, setting: "Bamboo Metro" },
-      { id: "id", name: "Indonesia", weight: 9, baseIncome: 4800, healthMod: 0, setting: "Island Temple" },
-      { id: "in", name: "India", weight: 16, baseIncome: 3200, healthMod: 0, setting: "Royal Bazaar" },
-      { id: "us", name: "United States", weight: 6, baseIncome: 25000, healthMod: 1, setting: "Star Avenue" },
-      { id: "br", name: "Brazil", weight: 7, baseIncome: 6200, healthMod: 0, setting: "Carnival Coast" },
-      { id: "ng", name: "Nigeria", weight: 10, baseIncome: 2600, healthMod: -1, setting: "Sunny Savannah" }
-    );
-
-    function drawCountryBackdrop(countryId) {
-      const motifs = {
-        jp: `<path d="M22 65 L75 65 M28 73 L69 73 M35 65 L35 110 M62 65 L62 110" stroke="#ff7597" stroke-width="4" stroke-linecap="round"/><circle cx="185" cy="48" r="14" fill="#ffb3c6"/>`,
-        sg: `<path d="M25 105 L25 65 M45 105 L45 65 M65 105 L65 65 M18 65 Q45 55 72 65 Z" fill="#8ecae6" stroke="#4a342e" stroke-width="2.2"/>`,
-        vn: `<ellipse cx="42" cy="52" rx="14" ry="11" fill="#ff8fab" stroke="#4a342e" stroke-width="2.2"/><line x1="42" y1="35" x2="42" y2="75" stroke="#4a342e" stroke-width="2"/>`,
-        cn: `<circle cx="40" cy="52" r="13" fill="#ff5c83" stroke="#4a342e" stroke-width="2.2"/><line x1="185" y1="40" x2="185" y2="110" stroke="#52b788" stroke-width="4" stroke-linecap="round"/>`,
-        id: `<path d="M25 105 L38 62 L52 105 Z" fill="#ffd166" stroke="#4a342e" stroke-width="2.2"/>`,
-        in: `<path d="M25 105 L25 80 Q44 52 63 80 L63 105 Z" fill="#fff3b0" stroke="#4a342e" stroke-width="2.2"/>`,
-        us: `<rect x="24" y="62" width="16" height="45" fill="#8ecae6" stroke="#4a342e" stroke-width="2.2"/><rect x="44" y="48" width="18" height="59" fill="#cdb4db" stroke="#4a342e" stroke-width="2.2"/>`,
-        br: `<circle cx="44" cy="58" r="16" fill="#ffd166" stroke="#4a342e" stroke-width="2.2"/>`,
-        ng: `<circle cx="44" cy="54" r="15" fill="#ffb703" stroke="#4a342e" stroke-width="2.2"/>`
-      };
-      return motifs[countryId] || motifs.jp;
-    }
-
-    function drawChiikawaCharacter(age, mood, countryId = 'jp', jobKey = 'baby') {
-      const stage = age <= 2 ? 0 : age <= 11 ? 1 : age <= 19 ? 2 : age <= 54 ? 3 : 4;
-      const isBaby = stage === 0;
-      const bodyRx = isBaby ? 38 : 46;
-      const bodyRy = isBaby ? 32 : 42;
-
-      let eyes = `<circle cx="88" cy="98" r="5.5" fill="#4a342e"/><circle cx="86" cy="96" r="1.8" fill="#ffffff"/><circle cx="132" cy="98" r="5.5" fill="#4a342e"/><circle cx="130" cy="96" r="1.8" fill="#ffffff"/>`;
-      let tears = '';
-      if (mood === 'happy') {
-        eyes = `<path d="M81 98 Q88 89 95 98 M125 98 Q132 89 139 98" stroke="#4a342e" stroke-width="3.2" fill="none" stroke-linecap="round"/>`;
-      } else if (mood === 'cry') {
-        tears = `<path d="M83 104 Q78 117 83 126 Q88 117 83 104 Z" fill="#8ecae6" stroke="#4a342e" stroke-width="2"/><path d="M137 104 Q142 117 137 126 Q132 117 137 104 Z" fill="#8ecae6" stroke="#4a342e" stroke-width="2"/>`;
-      }
-
-      let props = '';
-      if (stage === 0) {
-        props = `<path d="M108 44 Q115 30 122 40 Q115 46 110 44" fill="none" stroke="#4a342e" stroke-width="3" stroke-linecap="round"/><path d="M76 132 Q110 156 144 132 Q138 164 110 164 Q82 164 76 132 Z" fill="#ffe5ec" stroke="#4a342e" stroke-width="3"/><ellipse cx="110" cy="114" rx="9" ry="7" fill="#ff8fab" stroke="#4a342e" stroke-width="2.5"/>`;
-      } else if (stage === 1) {
-        props = `<path d="M72 50 Q110 26 148 50 Z" fill="#ffd166" stroke="#4a342e" stroke-width="3"/><line x1="74" y1="130" x2="138" y2="174" stroke="#ff8fab" stroke-width="4"/><circle cx="136" cy="170" r="11" fill="#ff8fab" stroke="#4a342e" stroke-width="2.5"/>`;
-      } else if (stage === 2) {
-        props = `<path d="M64 66 Q110 58 156 66 L154 75 Q110 67 66 75 Z" fill="#ff8fab" stroke="#4a342e" stroke-width="2.8"/><rect x="144" y="134" width="24" height="30" rx="4" fill="#8ecae6" stroke="#4a342e" stroke-width="2.8"/>`;
-      } else {
-        if (jobKey === 'chef') {
-          props += `<path d="M78 48 Q75 18 110 20 Q145 18 142 48 Z" fill="#ffffff" stroke="#4a342e" stroke-width="3"/><path d="M142 146 L182 146 Q178 168 162 168 Q146 168 142 146 Z" fill="#ff8fab" stroke="#4a342e" stroke-width="2.6"/>`;
-        } else if (jobKey === 'scholar') {
-          props += `<polygon points="110 24 68 42 110 56 152 42" fill="#4a342e" stroke="#4a342e" stroke-width="2.5"/><rect x="145" y="132" width="26" height="32" rx="4" fill="#72efdd" stroke="#4a342e" stroke-width="2.6"/>`;
-        } else if (jobKey === 'idol') {
-          props += `<polygon points="110 26 116 38 129 40 119 48 122 60 110 53 98 60 101 48 91 40 104 38" fill="#ffd166" stroke="#4a342e" stroke-width="2.4"/><circle cx="166" cy="124" r="9" fill="#ff8fab" stroke="#4a342e" stroke-width="2.5"/>`;
-        } else if (jobKey === 'tycoon') {
-          props += `<polygon points="82 48 92 24 110 38 128 24 138 48" fill="#ffd166" stroke="#4a342e" stroke-width="2.8"/><circle cx="160" cy="154" r="15" fill="#ffd166" stroke="#4a342e" stroke-width="2.6"/>`;
-        } else {
-          props += `<line x1="168" y1="75" x2="168" y2="188" stroke="#ff8fab" stroke-width="6" stroke-linecap="round"/><line x1="168" y1="75" x2="168" y2="188" stroke="#4a342e" stroke-width="2.5" stroke-linecap="round"/><path d="M152 55 A16 16 0 0 0 184 55" fill="none" stroke="#ff8fab" stroke-width="6" stroke-linecap="round"/><path d="M152 55 A16 16 0 0 0 184 55" fill="none" stroke="#4a342e" stroke-width="2.5" stroke-linecap="round"/>`;
-        }
-        if (stage === 4) {
-          props += `<circle cx="88" cy="98" r="12" fill="none" stroke="#4a342e" stroke-width="2.5"/><circle cx="132" cy="98" r="12" fill="none" stroke="#4a342e" stroke-width="2.5"/><line x1="100" y1="98" x2="120" y2="98" stroke="#4a342e" stroke-width="2.5"/>`;
-        }
-      }
-
-      return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 210" width="100%" height="100%">
-        ${drawCountryBackdrop(countryId)}
-        <ellipse cx="110" cy="194" rx="54" ry="9" fill="rgba(74,52,46,0.13)"/>
-        <circle cx="72" cy="50" r="18" fill="#ffffff" stroke="#4a342e" stroke-width="3.6"/><circle cx="72" cy="50" r="9" fill="#ffe5ec"/>
-        <circle cx="148" cy="50" r="18" fill="#ffffff" stroke="#4a342e" stroke-width="3.6"/><circle cx="148" cy="50" r="9" fill="#ffe5ec"/>
-        <ellipse cx="110" cy="152" rx="${bodyRx}" ry="${bodyRy}" fill="#ffffff" stroke="#4a342e" stroke-width="3.6"/>
-        <ellipse cx="110" cy="96" rx="54" ry="48" fill="#ffffff" stroke="#4a342e" stroke-width="3.6"/>
-        <ellipse cx="110" cy="132" rx="${bodyRx - 4}" ry="18" fill="#ffffff"/>
-        <ellipse cx="88" cy="190" rx="11" ry="7" fill="#ffffff" stroke="#4a342e" stroke-width="3.2"/>
-        <ellipse cx="132" cy="190" rx="11" ry="7" fill="#ffffff" stroke="#4a342e" stroke-width="3.2"/>
-        <ellipse cx="62" cy="146" rx="11" ry="8" transform="rotate(-20 62 146)" fill="#ffffff" stroke="#4a342e" stroke-width="3.2"/>
-        <ellipse cx="158" cy="146" rx="11" ry="8" transform="rotate(20 158 146)" fill="#ffffff" stroke="#4a342e" stroke-width="3.2"/>
-        <ellipse cx="70" cy="108" rx="12" ry="7" fill="#ffb3c6"/><ellipse cx="150" cy="108" rx="12" ry="7" fill="#ffb3c6"/>
-        <path d="M82 84 Q88 81 93 84 M127 84 Q132 81 138 84" stroke="#4a342e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-        ${eyes}
-        <path d="M102 108 Q106 114 110 109 Q114 114 118 108" fill="none" stroke="#4a342e" stroke-width="2.8" stroke-linecap="round"/>
-        ${tears}
-        ${props}
-      </svg>`;
-    }
-
-    let curLang = 'en';
-    let targetLifeMinutes = 5;
-    let tickMs = 3750;
-    let elapsedMs = 0;
-    let isPaused = false;
-    let karma = 20, village = Array.of(), perks = { health: false, smart: false, rich: false };
-    let state = null, peers = Array.of(), loopTimer = null;
-
-    try {
-      karma = parseInt(localStorage.getItem('ffb_karma_v3') || '20', 10) || 20;
-      village = JSON.parse(localStorage.getItem('ffb_village_v3') || '[]');
-      if (!Array.isArray(village)) village = Array.of();
-    } catch (e) { karma = 20; village = Array.of(); }
-
-    function changeLang(lang) {
-      curLang = I18N[lang] ? lang : 'en';
-      const t = I18N[curLang];
-      document.getElementById('ui-karma-lbl').textContent = t.karma;
-      document.getElementById('ui-hero-title').textContent = t.heroTitle;
-      document.getElementById('ui-hero-sub').textContent = t.heroSub;
-      document.getElementById('ui-dur-title').textContent = t.durTitle;
-      document.getElementById('ui-perk-header').textContent = t.perkHeader;
-      document.getElementById('born-btn').textContent = t.bornBtn;
-      document.getElementById('ui-wealth-lbl').textContent = t.wealth;
-      document.getElementById('lbl-health').textContent = t.health;
-      document.getElementById('lbl-happy').textContent = t.happy;
-      document.getElementById('lbl-smart').textContent = t.smart;
-      document.getElementById('lbl-social').textContent = t.social;
-      document.getElementById('ui-focus-hdr').textContent = t.focusHdr;
-      document.getElementById('focus-balanced').textContent = t.fBal;
-      document.getElementById('focus-study').textContent = t.fStu;
-      document.getElementById('focus-hustle').textContent = t.fHus;
-      document.getElementById('focus-health').textContent = t.fHea;
-      document.getElementById('focus-social').textContent = t.fSoc;
-      document.getElementById('btn-pause').textContent = isPaused ? t.resume : t.pause;
-      document.getElementById('miracle-btn').textContent = t.wish;
-      document.getElementById('save-img-btn').textContent = t.savePng;
-      document.getElementById('ui-peers-title').textContent = t.peersTitle;
-      document.getElementById('ui-village-title').textContent = t.villageTitle;
-      if (state) renderState();
-    }
-
-    function setLifeMinutes(mins) {
-      targetLifeMinutes = mins;
-      tickMs = Math.round((mins * 60 * 1000) / 80);
-      elapsedMs = 0;
-      isPaused = false;
-      Array.of(1, 5, 15, 30).forEach(m => {
-        const b1 = document.getElementById('dur-pre-' + m);
-        const b2 = document.getElementById('dur-live-' + m);
-        if (b1) b1.classList.toggle('btn-active', m === mins);
-        if (b2) b2.classList.toggle('btn-active', m === mins);
-      });
-      const sec = (tickMs / 1000).toFixed(2);
-      document.getElementById('ui-dur-note').textContent = `Selected: ${mins} min life (${sec}s per year)`;
-      document.getElementById('ui-live-pace').textContent = `${mins}m Mode (${sec}s/yr)`;
-    }
-
-    function togglePause() {
-      isPaused = !isPaused;
-      changeLang(curLang);
-    }
-
-    function assignJobByStats(s) {
-      if (s.age <= 2) return 'baby';
-      if (s.age <= 11) return 'kid';
-      if (s.age <= 19) return 'student';
-      if (s.wealth > 45000) return 'tycoon';
-      if (s.smart >= 50) return 'scholar';
-      if (s.social >= 60) return 'idol';
-      if (s.focus === 'health') return 'chef';
-      return 'hunter';
-    }
-
-    function drawCountry() {
-      const total = COUNTRIES.reduce((sum, c) => sum + c.weight, 0);
-      let r = Math.random() * total;
-      for (const c of COUNTRIES) { if (r < c.weight) return c; r -= c.weight; }
-      return COUNTRIES.at(0);
-    }
-
-    function beBorn() {
-      const c = drawCountry();
-      state = {
-        age: 1,
-        country: c,
-        jobKey: 'baby',
-        health: Math.min(100, 80 + (perks.health ? 20 : 0) + c.healthMod * 2),
-        happy: 85,
-        smart: Math.min(100, 15 + (perks.smart ? 20 : 0)),
-        social: 78,
-        wealth: Math.round(c.baseIncome * 0.3 * (perks.rich ? 2 : 1)),
-        income: 0,
-        focus: 'balanced',
-        alive: true,
-        miracleUsed: false
-      };
-      peers = Array.of(
-        { name: "Hachi", color: "#dff4ff", country: drawCountry() },
-        { name: "Usagi", color: "#fff3b0", country: drawCountry() },
-        { name: "Momo", color: "#efe5f7", country: drawCountry() },
-        { name: "Kuri", color: "#d8f3dc", country: drawCountry() }
-      );
-      document.getElementById('start-screen').style.display = 'none';
-      document.getElementById('game-screen').style.display = 'block';
-      document.getElementById('end-box').style.display = 'none';
-      document.getElementById('timeline').innerHTML = '';
-      elapsedMs = 0;
-      isPaused = false;
-      logMsg(`Born in <strong>${c.name}</strong> (${c.setting})! Watch the blue progress bar tick toward Age 2!`, 'milestone');
-      renderState();
-      startHeartbeat();
-    }
-
-    function startHeartbeat() {
-      if (loopTimer) clearInterval(loopTimer);
-      loopTimer = setInterval(() => {
-        if (!state || !state.alive || isPaused) return;
-        elapsedMs += 100;
-        const pct = Math.min(100, Math.round((elapsedMs / tickMs) * 100));
-        document.getElementById('year-prog-bar').style.width = pct + '%';
-        document.getElementById('year-prog-lbl').textContent = `Growing toward Age ${state.age + 1}... (${pct}%)`;
-        if (elapsedMs >= tickMs) {
-          elapsedMs = 0;
-          stepYear();
-        }
-      }, 100);
-    }
-
-    function stepYear() {
-      if (!state || !state.alive) return;
-      elapsedMs = 0;
-      state.age++;
-
-      if (state.focus === 'study') { state.smart += 4; state.happy -= 1; }
-      else if (state.focus === 'hustle') {
-        if (state.age >= 16) state.income += Math.round(state.country.baseIncome * 0.1);
-        state.health -= 1.3;
-      } else if (state.focus === 'health') { state.health += 3; }
-      else if (state.focus === 'social') { state.social += 3; state.happy += 2; }
-      else { state.smart += 1.8; state.happy += 1; }
-
-      state.jobKey = assignJobByStats(state);
-
-      if (state.age === 3) logMsg("Age 3: Started Kindergarten with your Pink Bear Pochette!", "milestone");
-      else if (state.age === 12) logMsg("Age 12: Put on your Student Exam Headband!", "milestone");
-      else if (state.age === 20) {
-        state.income = Math.max(state.income, Math.round(state.country.baseIncome * 0.8));
-        logMsg(`Age 20: Started career as <strong>${I18N[curLang].jobs[state.jobKey]}</strong>!`, "milestone");
-      } else if (state.age === 55) {
-        logMsg("Age 55: Entered cozy Elder stage with round glasses!", "milestone");
-      } else if (state.age % 4 === 0) {
-        logMsg(`Continued focusing on ${state.focus} in ${state.country.name}.`);
-      }
-
-      if (state.age >= 18) {
-        state.wealth = Math.max(0, state.wealth + state.income - Math.round(state.country.baseIncome * 0.35));
-      }
-      if (state.age > 55) state.health -= (state.age - 52) * 0.22;
-
-      'health,happy,smart,social'.split(',').forEach(k => {
-        state[k] = Math.max(0, Math.min(100, Math.round(state[k])));
-      });
-
-      if (state.health <= 0 || state.age >= 85) endLife();
-      renderState();
-    }
-
-    function logMsg(html, type = '') {
-      const t = document.getElementById('timeline');
-      const div = document.createElement('div');
-      div.className = 'log-item ' + type;
-      div.innerHTML = `<strong>Age ${state.age}:</strong> ${html}`;
-      t.prepend(div);
-    }
-
-    function patCharacter() {
-      if (!state || !state.alive) return;
-      state.happy = Math.min(100, state.happy + 3);
-      document.getElementById('char-speech').textContent = '"Ehehe~ Mogu mogu! (+3 Joy)"';
-      renderState();
-    }
-
-    function setFocus(f) {
-      if (!state) return;
-      state.focus = f;
-      'balanced,study,hustle,health,social'.split(',').forEach(k => {
-        document.getElementById('focus-' + k).classList.toggle('btn-active', k === f);
-      });
-    }
-
-    function miracleBoost() {
-      if (!state || !state.alive || state.miracleUsed) return;
-      state.miracleUsed = true;
-      state.health = Math.min(100, state.health + 25);
-      state.happy = Math.min(100, state.happy + 25);
-      state.wealth += 10000;
-      state.jobKey = assignJobByStats(state);
-      logMsg("Star Wish healed your cheeks and granted +$10,000!", "milestone");
-      renderState();
-    }
-
-    function buyPerk(type, cost) {
-      if (perks[type] || karma < cost) return;
-      karma -= cost;
-      perks[type] = true;
-      try { localStorage.setItem('ffb_karma_v3', karma); } catch (e) {}
-      document.getElementById('perk-' + type).textContent = "Active";
-      updateMetaUI();
-    }
-
-    function endLife() {
-      state.alive = false;
-      if (loopTimer) clearInterval(loopTimer);
-      const earned = Math.max(15, Math.round(state.age * 0.5 + state.happy * 0.2));
-      karma += earned;
-      village.push({ country: state.country.name, age: state.age, wealth: state.wealth, karmaEarned: earned });
-      try {
-        localStorage.setItem('ffb_karma_v3', karma);
-        localStorage.setItem('ffb_village_v3', JSON.stringify(village.slice(-10)));
-      } catch (e) {}
-      document.getElementById('end-box').style.display = 'block';
-      document.getElementById('epitaph-text').innerHTML =
-        `<strong>${state.country.name}</strong> · Lived to Age ${state.age} · <strong>${I18N[curLang].jobs[state.jobKey]}</strong> · Savings: <strong>$${state.wealth.toLocaleString()}</strong> (+${earned} Karma)`;
-      updateMetaUI();
-    }
-
-    function resetToStart() {
-      document.getElementById('game-screen').style.display = 'none';
-      document.getElementById('start-screen').style.display = 'block';
-      updateMetaUI();
-    }
-
-    function updateMetaUI() {
-      document.getElementById('karma-count').textContent = karma;
-      const vEl = document.getElementById('village-list');
-      vEl.innerHTML = village.length === 0
-        ? `<div style="color:var(--muted); font-size:0.8rem;">Complete a life to fill your village!</div>`
-        : village.slice().reverse().map(v => `
-          <div class="peer-row">
-            <span><strong>${v.country}</strong> (Age ${v.age})</span>
-            <span>$${v.wealth.toLocaleString()} (+${v.karmaEarned})</span>
-          </div>`).join('');
-    }
-
-    function renderState() {
-      const t = I18N[curLang];
-      const stageIdx = state.age <= 2 ? 0 : state.age <= 11 ? 1 : state.age <= 19 ? 2 : state.age <= 54 ? 3 : 4;
-      const jobTitle = t.jobs[state.jobKey] || t.jobs.baby;
-
-      document.getElementById('birth-tag').textContent = `${state.country.name} (${state.country.setting})`;
-      document.getElementById('job-tag').textContent = jobTitle;
-      document.getElementById('wealth-val').textContent = state.wealth.toLocaleString();
-      document.getElementById('income-val').textContent = state.income.toLocaleString();
-
-      'health,happy,smart,social'.split(',').forEach(k => {
-        document.getElementById('stat-' + k).textContent = `${state[k]}/100`;
-        document.getElementById('bar-' + k).style.width = `${state[k]}%`;
-      });
-
-      const mood = (state.health < 40 || state.happy < 40) ? 'cry' : (state.happy > 72 ? 'happy' : 'normal');
-      const wrap = document.getElementById('right-char-svg');
-      wrap.className = mood === 'cry' ? 'anim-cry' : 'anim-happy';
-      wrap.innerHTML = drawChiikawaCharacter(state.age, mood, state.country.id, state.jobKey);
-
-      document.getElementById('right-age-badge').textContent = `Age ${state.age} · ${t.stages.at(stageIdx)}`;
-      document.getElementById('right-country-badge').textContent = state.country.name;
-      document.getElementById('right-job-badge').textContent = jobTitle;
-
-      for (let i = 0; i < 5; i++) {
-        document.getElementById('stp-' + i).classList.toggle('current', i === stageIdx);
-      }
-
-      document.getElementById('peers-list').innerHTML = peers.map(p => `
-        <div class="peer-row" style="background:${p.color};">
-          <span><strong>${p.name}</strong> · ${p.country.name}</span>
-          <span>Age ${state.age}</span>
-        </div>`).join('');
-    }
-
-    function downloadCharacterCard() {
-      const age = state ? state.age : 1;
-      const countryName = state ? state.country.name : "Japan";
-      const countrySetting = state ? state.country.setting : "Sakura Ward";
-      const countryId = state ? state.country.id : "jp";
-      const jobKey = state ? state.jobKey : "baby";
-      const jobTitle = I18N[curLang].jobs[jobKey];
-      const wealth = state ? state.wealth : 1200;
-      const mood = (state && (state.health < 40 || state.happy < 40)) ? 'cry' : 'happy';
-
-      const canvas = document.getElementById('export-canvas');
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#fffdf9'; ctx.fillRect(0, 0, 800, 960);
-      ctx.fillStyle = '#ffe5ec'; ctx.fillRect(28, 28, 744, 904);
-      ctx.strokeStyle = '#4a342e'; ctx.lineWidth = 10; ctx.strokeRect(28, 28, 744, 904);
-      ctx.fillStyle = '#dff4ff'; ctx.fillRect(60, 140, 680, 520); ctx.strokeRect(60, 140, 680, 520);
-
-      ctx.fillStyle = '#4a342e'; ctx.font = 'bold 34px sans-serif'; ctx.textAlign = 'center';
-      ctx.fillText(`FatFatBaby.com · 1 in 8 Billion Card`, 400, 95);
-
-      const svgString = drawChiikawaCharacter(age, mood, countryId, jobKey);
-      const blob = new Blob(Array.of(svgString), { type: 'image/svg+xml;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const img = new Image();
-      img.onload = () => {
-        ctx.drawImage(img, 150, 155, 500, 480);
-        URL.revokeObjectURL(url);
-        ctx.fillStyle = '#ffffff'; ctx.fillRect(60, 690, 680, 200); ctx.strokeRect(60, 690, 680, 200);
-        ctx.fillStyle = '#4a342e'; ctx.font = 'bold 30px sans-serif';
-        ctx.fillText(`Age ${age} · ${jobTitle}`, 400, 742);
-        ctx.font = 'bold 24px sans-serif'; ctx.fillStyle = '#d97706';
-        ctx.fillText(`Country: ${countryName} (${countrySetting})`, 400, 788);
-        ctx.fillStyle = '#4a342e'; ctx.font = 'bold 22px sans-serif';
-        ctx.fillText(`Savings: $${wealth.toLocaleString()}  |  Play at https://fatfatbaby.com`, 400, 845);
-
-        const link = document.createElement('a');
-        link.download = `fatfatbaby-age-${age}-${countryName.toLowerCase()}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-      };
-      img.src = url;
-    }
-
-    document.getElementById('right-char-svg').innerHTML = drawChiikawaCharacter(1, 'happy', 'jp', 'baby');
-    changeLang('en');
-    setLifeMinutes(5);
-    updateMetaUI();
-  </script>
-</body>
-</html>
+      { id: "jp", name: "Japan", weight: 5, baseIncome: 22000, healthMod: 2, setting: "Sakura Ward",
+        localEvents: Array.of(
+          { text: "Found a rare limited-edition pudding at a Tokyo konbini! (+6 Joy)", dh: 2, dhp: 6, dsm: 0, dso: 2, dw: 0, type: "good" },
+          { text: "Joined a neighborhood cherry blossom picnic under falling petals! (+8 Friends)", dh: 0, dhp: 5, dsm: 0, dso: 8, dw: 0, type: "good" },
+          { text: "Won a prize capsule toy at an Akihabara gachapon machine! (+5 Joy)", dh: 0, dhp: 5, dsm: 2, dso: 0, dw: 150, type: "good" },
+          { text: "Relaxed in a steaming cedar hot spring bath after a long week! (+9 Health)", dh: 9, dhp: 6, dsm: 0, dso: 0, dw: 0, type: "good" }
+        )
+      },
+      { id: "sg", name: "Singapore", weight: 4, baseIncome: 28000, healthMod: 2, setting: "Marina Bay",
+        localEvents: Array.of(
+          { text: "Sharedkaya toast and soft-boiled eggs at a bustling hawker centre! (+6 Joy)", dh: 3, dhp: 6, dsm: 0, dso: 5, dw: 0, type: "good" },
+          { text: "Strolled through the glowing Supertree Grove light show at night! (+7 Joy)", dh: 2, dhp: 7, dsm: 2, dso: 4, dw: 0, type: "good" },
+          { text: "Won a fintech pitch prize at a Marina Bay startup mixer! (+\$2,200)", dh: 0, dhp: 4, dsm: 6, dso: 4, dw: 2200, type: "milestone" },
+          { text: "Caught a sudden tropical afternoon downpour without an umbrella! (-4 Health)", dh: -4, dhp: -2, dsm: 0, dso: 0, dw: 0, type: "danger" }
+        )
+      },
+      { id: "vn", name: "Vietnam", weight: 7, baseIncome: 5200, healthMod: 0, setting: "Lantern Delta",
+        localEvents: Array.of(
+          { text: "Sipped iced egg coffee on a tiny plastic stool with best friends! (+8 Friends)", dh: 1, dhp: 7, dsm: 0, dso: 8, dw: 0, type: "good" },
+          { text: "Released glowing paper lanterns along the river at full moon! (+9 Joy)", dh: 2, dhp: 9, dsm: 0, dso: 5, dw: 0, type: "good" },
+          { text: "Sold handmade crafts at a bustling weekend night market! (+\$650)", dh: 0, dhp: 4, dsm: 3, dso: 4, dw: 650, type: "milestone" },
+          { text: "Slurped a steaming bowl of morning pho that cured your fatigue! (+7 Health)", dh: 7, dhp: 5, dsm: 0, dso: 0, dw: 0, type: "good" }
+        )
+      },
+      { id: "cn", name: "China", weight: 12, baseIncome: 8500, healthMod: 1, setting: "Bamboo Metro",
+        localEvents: Array.of(
+          { text: "Received a lucky red envelope during Lunar New Year festivities! (+\$880)", dh: 0, dhp: 8, dsm: 0, dso: 6, dw: 880, type: "milestone" },
+          { text: "Mastered a viral livestreaming
